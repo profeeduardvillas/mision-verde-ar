@@ -16,8 +16,8 @@ html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 <body>
 <div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">Busca el marcador</div></div>
 <div id="help">Apunta la cámara al marcador impreso y manténlo completo dentro de la pantalla.</div>
-<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.70; sourceWidth:1280; sourceHeight:720; displayWidth:1280; displayHeight:720; maxDetectionRate:30;">
-<a-marker id="mision-verde-marker" preset="hiro" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
+<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; sourceWidth:1280; sourceHeight:720; displayWidth:1280; displayHeight:720; maxDetectionRate:30;">
+<a-marker id="mision-verde-marker" type="pattern" url="marker.patt" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
 <a-entity position="0 0.01 0" rotation="-90 0 0">
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
 <a-box position="0 0 0.01" width="2.55" height="0.025" depth="0.025" color="#163b22"></a-box>
