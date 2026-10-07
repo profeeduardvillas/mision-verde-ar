@@ -7,16 +7,16 @@
 <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.8/aframe/build/aframe-ar.js"></script>
 <style>
-html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
-#hud{position:fixed;z-index:10;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
+html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}video{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:0!important}a-scene{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important}a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important}
+#hud{position:fixed;z-index:20;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
 .badge{background:rgba(10,75,38,.92);color:#fff;padding:9px 12px;border-radius:14px;font-weight:700;font-size:14px}
-#help{position:fixed;z-index:10;left:12px;right:12px;bottom:14px;background:rgba(255,255,255,.94);color:#17351e;border-radius:16px;padding:12px 14px;text-align:center;font-size:14px}
+#help{position:fixed;z-index:20;left:12px;right:12px;bottom:14px;background:rgba(255,255,255,.94);color:#17351e;border-radius:16px;padding:12px 14px;text-align:center;font-size:14px}
 </style>
 </head>
 <body>
 <div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">Busca el marcador</div></div>
 <div id="help">Apunta la cámara al marcador impreso y manténlo completo dentro de la pantalla.</div>
-<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; sourceWidth:640; sourceHeight:480; displayWidth:640; displayHeight:480; maxDetectionRate:60;">
+<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; videoTexture: true; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; sourceWidth: window.innerWidth > window.innerHeight ? 640 : 480; sourceHeight: window.innerWidth > window.innerHeight ? 480 : 640; displayWidth: window.innerWidth > window.innerHeight ? 640 : 480; displayHeight: window.innerWidth > window.innerHeight ? 480 : 640; maxDetectionRate:60;">
 <a-marker id="mision-verde-marker" type="pattern" url="marker.patt" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
 <a-entity position="0 0.01 0" rotation="-90 0 0">
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
