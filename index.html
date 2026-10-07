@@ -18,7 +18,7 @@ html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 <div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">PRUEBA: marcador HIRO</div></div>
 <div id="diag">Diagnóstico: esperando cámara…</div>
 <div id="help">PRUEBA: apunta al HIRO oficial. Si no se reconoce, manténlo completo en pantalla, bien iluminado y sin reflejos.</div>
-<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; videoTexture: true; trackingMethod: best; debugUIEnabled:true; patternRatio:0.50; sourceWidth: window.innerWidth > window.innerHeight ? 640 : 480; sourceHeight: window.innerWidth > window.innerHeight ? 480 : 640; displayWidth: window.innerWidth > window.innerHeight ? 640 : 480; displayHeight: window.innerWidth > window.innerHeight ? 480 : 640; maxDetectionRate:60;">
+<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:true; patternRatio:0.50; maxDetectionRate:30;">
 <a-marker id="mision-verde-marker" preset="hiro" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
 <a-entity position="0 0.01 0" rotation="-90 0 0">
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
@@ -60,6 +60,7 @@ const diag=document.querySelector('#diag');
 const scene=document.querySelector('a-scene');
 window.addEventListener('load',()=>{status.textContent='Iniciando cámara…';diag.textContent='Diagnóstico: página cargada · esperando cámara';});
 scene.addEventListener('camera-init',()=>{status.textContent='✓ Cámara lista · busca HIRO';diag.textContent='Diagnóstico: cámara OK · AR.js 3.4.8 · HIRO activo';});
+setTimeout(()=>{const v=document.querySelector('video'); if(v){v.setAttribute('playsinline','');v.muted=true;v.autoplay=true;diag.textContent='Diagnóstico: elemento de cámara creado · estado '+v.readyState; if(v.readyState>=2) status.textContent='✓ Cámara lista · busca HIRO';}},2500);
 scene.addEventListener('arjs-video-loaded',()=>{diag.textContent='Diagnóstico: vídeo AR cargado · detector activo';});
 scene.addEventListener('renderstart',()=>{diag.textContent='Diagnóstico: renderizado activo · detector buscando HIRO';});
 scene.addEventListener('camera-error',(e)=>{status.textContent='⚠️ Error de cámara';diag.textContent='Diagnóstico: AR.js no pudo abrir la cámara';});
