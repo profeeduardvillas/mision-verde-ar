@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Misión Verde WebAR</title>
 <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.7/aframe/build/aframe-ar.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.8/aframe/build/aframe-ar.js"></script>
 <style>
 html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 #hud{position:fixed;z-index:10;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
@@ -16,7 +16,7 @@ html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 <body>
 <div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">Busca el marcador</div></div>
 <div id="help">Apunta la cámara al marcador impreso y manténlo completo dentro de la pantalla.</div>
-<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; sourceWidth:1280; sourceHeight:720; displayWidth:1280; displayHeight:720; maxDetectionRate:30;">
+<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; sourceWidth:640; sourceHeight:480; displayWidth:640; displayHeight:480; maxDetectionRate:60;">
 <a-marker id="mision-verde-marker" type="pattern" url="marker.patt" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
 <a-entity position="0 0.01 0" rotation="-90 0 0">
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
@@ -54,6 +54,10 @@ html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 <script>
 const marker=document.querySelector('#mision-verde-marker');
 const status=document.querySelector('#status');
+const scene=document.querySelector('a-scene');
+window.addEventListener('load',()=>{status.textContent='Iniciando cámara…';});
+scene.addEventListener('camera-init',()=>{status.textContent='✓ Cámara lista · busca el marcador';});
+scene.addEventListener('camera-error',()=>{status.textContent='⚠️ No se pudo abrir la cámara';});
 marker.addEventListener('markerFound',()=>{status.textContent='✓ ¡Marcador reconocido!';});
 marker.addEventListener('markerLost',()=>{status.textContent='Busca el marcador';});
 </script>
