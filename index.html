@@ -3,23 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Misión Verde WebAR · Diagnóstico HIRO</title>
+<title>Misión Verde · Realidad Aumentada</title>
 <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.8/aframe/build/aframe-ar.js"></script>
 <style>
-html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}video{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:0!important}a-scene{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important}a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important}
-#hud{position:fixed;z-index:20;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
-.badge{background:rgba(10,75,38,.92);color:#fff;padding:9px 12px;border-radius:14px;font-weight:700;font-size:14px}
-#help{position:fixed;z-index:20;left:12px;right:12px;bottom:14px;background:rgba(255,255,255,.94);color:#17351e;border-radius:16px;padding:12px 14px;text-align:center;font-size:14px}
-#diag{position:fixed;z-index:20;top:62px;left:12px;right:12px;background:rgba(0,0,0,.72);color:#fff;border-radius:14px;padding:9px 11px;font-size:12px;line-height:1.4}
+html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
+video{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:0!important}
+a-scene{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important}
+a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important}
+#hud{position:fixed;z-index:20;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none}
+.badge{background:rgba(10,75,38,.92);color:#fff;padding:10px 13px;border-radius:16px;font-weight:700;font-size:14px;box-shadow:0 2px 10px #0003}
+#help{position:fixed;z-index:20;left:12px;right:12px;bottom:14px;background:rgba(255,255,255,.92);color:#17351e;border-radius:16px;padding:11px 14px;text-align:center;font-size:14px;line-height:1.35;box-shadow:0 2px 12px #0003}
 </style>
 </head>
 <body>
-<div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">PRUEBA: marcador HIRO</div></div>
-<div id="diag">Diagnóstico: esperando cámara…</div>
-<div id="help">PRUEBA: apunta al HIRO oficial. Si no se reconoce, manténlo completo en pantalla, bien iluminado y sin reflejos.</div>
-<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:true; patternRatio:0.50; maxDetectionRate:30;">
+<div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">Enfoca el marcador</div></div>
+<div id="help">Explora el plano cartesiano y descubre cómo cuidar nuestro planeta 🌱</div>
+<a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; maxDetectionRate:30;">
 <a-marker id="mision-verde-marker" preset="hiro" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
+<a-entity scale="0.36 0.36 0.36">
 <a-entity position="0 0.01 0" rotation="-90 0 0">
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
 <a-box position="0 0 0.01" width="2.55" height="0.025" depth="0.025" color="#163b22"></a-box>
@@ -40,7 +42,7 @@ html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 <a-entity position="0.55 0.05 0.62">
 <a-box width="0.42" height="0.55" depth="0.36" color="#159447"></a-box>
 <a-box width="0.46" height="0.07" depth="0.40" color="#0d6931" position="0 0.30 0"></a-box>
-<a-text value="♻ Reciclaje (2,-2)" align="center" color="#123c20" width="2.2" position="0 0.62 0"></a-text>
+<a-text value="Reciclaje (2,-2)" align="center" color="#123c20" width="2.2" position="0 0.62 0"></a-text>
 </a-entity>
 <a-entity position="-0.78 0.10 -0.60">
 <a-box width="0.58" height="0.04" depth="0.40" color="#1769aa" rotation="-18 0 0"></a-box>
@@ -50,22 +52,15 @@ html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,sans-serif}
 </a-entity>
 <a-text value="MISIÓN VERDE" align="center" color="#16833d" width="4.0" position="0 1.25 0"></a-text>
 <a-text value="Plano cartesiano + ambiente" align="center" color="#17351e" width="2.8" position="0 1.00 0"></a-text>
+</a-entity>
 </a-marker>
 <a-entity camera></a-entity>
 </a-scene>
 <script>
 const marker=document.querySelector('#mision-verde-marker');
 const status=document.querySelector('#status');
-const diag=document.querySelector('#diag');
-const scene=document.querySelector('a-scene');
-window.addEventListener('load',()=>{status.textContent='Iniciando cámara…';diag.textContent='Diagnóstico: página cargada · esperando cámara';});
-scene.addEventListener('camera-init',()=>{status.textContent='✓ Cámara lista · busca HIRO';diag.textContent='Diagnóstico: cámara OK · AR.js 3.4.8 · HIRO activo';});
-setTimeout(()=>{const v=document.querySelector('video'); if(v){v.setAttribute('playsinline','');v.muted=true;v.autoplay=true;diag.textContent='Diagnóstico: elemento de cámara creado · estado '+v.readyState; if(v.readyState>=2) status.textContent='✓ Cámara lista · busca HIRO';}},2500);
-scene.addEventListener('arjs-video-loaded',()=>{diag.textContent='Diagnóstico: vídeo AR cargado · detector activo';});
-scene.addEventListener('renderstart',()=>{diag.textContent='Diagnóstico: renderizado activo · detector buscando HIRO';});
-scene.addEventListener('camera-error',(e)=>{status.textContent='⚠️ Error de cámara';diag.textContent='Diagnóstico: AR.js no pudo abrir la cámara';});
-marker.addEventListener('markerFound',()=>{status.textContent='✓ ¡HIRO reconocido! AR funciona';diag.textContent='DIAGNÓSTICO EXITOSO: markerFound';});
-marker.addEventListener('markerLost',()=>{status.textContent='Busca el marcador HIRO';diag.textContent='Detector activo · HIRO no visible ahora';});
+marker.addEventListener('markerFound',()=>{status.textContent='¡Misión activada! 🌿';});
+marker.addEventListener('markerLost',()=>{status.textContent='Enfoca el marcador';});
 </script>
 </body>
 </html>
