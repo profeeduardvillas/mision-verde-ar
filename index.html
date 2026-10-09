@@ -58,9 +58,15 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 </a-scene>
 <script>
 const marker=document.querySelector('#mision-verde-marker');
+const scene=document.querySelector('a-scene');
 const status=document.querySelector('#status');
+status.textContent='Iniciando cámara…';
+window.addEventListener('camera-init',()=>{status.textContent='Cámara activa · enfoca KANJI';});
+scene.addEventListener('camera-init',()=>{status.textContent='Cámara activa · enfoca KANJI';});
+window.addEventListener('camera-error',()=>{status.textContent='Cámara bloqueada: permite el acceso en Chrome';});
+scene.addEventListener('camera-error',()=>{status.textContent='Cámara bloqueada: permite el acceso en Chrome';});
 marker.addEventListener('markerFound',()=>{status.textContent='¡Misión activada! 🌿';});
-marker.addEventListener('markerLost',()=>{status.textContent='Enfoca el marcador';});
+marker.addEventListener('markerLost',()=>{status.textContent='Cámara activa · enfoca KANJI';});
 </script>
 </body>
 </html>
