@@ -20,7 +20,7 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <div id="hud"><div class="badge">🌎 MISIÓN VERDE</div><div class="badge" id="status">Enfoca el marcador</div></div>
 <div id="help">Explora el plano cartesiano y descubre cómo cuidar nuestro planeta 🌱</div>
 <a-scene embedded vr-mode-ui="enabled:false" renderer="antialias:true; alpha:true; precision:medium" arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled:false; patternRatio:0.50; maxDetectionRate:30;">
-<a-marker id="mision-verde-marker" preset="hiro" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
+<a-marker id="mision-verde-marker" type="pattern" url="marker.patt" emitevents="true" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
 <a-entity scale="0.36 0.36 0.36">
 <a-entity position="0 0.01 0" rotation="-90 0 0">
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
