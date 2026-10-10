@@ -27,7 +27,7 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-box position="0 0 0.01" width="2.55" height="0.025" depth="0.025" color="#163b22"></a-box>
 <a-box position="0 0 0.01" width="0.025" height="0.025" depth="2.55" color="#163b22"></a-box>
 </a-entity>
-<a-entity position="1.10 0.15 -0.44">
+<a-entity id="mission-tree" position="1.10 0.15 -0.44">
 <a-cylinder position="0 0.20 0" radius="0.075" height="0.40" color="#8b552e"></a-cylinder>
 <a-sphere position="0 0.52 0" radius="0.25" color="#27a844"></a-sphere>
 <a-sphere position="-0.16 0.46 0.02" radius="0.17" color="#49c85b"></a-sphere>
@@ -38,7 +38,7 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-text value="ARBOL" font="exo2bold" align="center" color="#073b2a" width="3.0" scale="0.31 0.31 0.31" position="0 1.23 0.08" wrap-count="28"></a-text>
 <a-text value="(5, 2)" font="exo2bold" align="center" color="#073b2a" width="3.0" scale="0.43 0.43 0.43" position="0 1.04 0.08" wrap-count="28"></a-text>
 </a-entity>
-<a-entity position="-0.66 0.06 -0.22">
+<a-entity id="mission-river" position="-0.66 0.06 -0.22">
 <a-box position="0 0.12 0" width="0.56" height="0.13" depth="0.22" color="#149de0" rotation="0 0 -18"></a-box>
 <a-box position="-0.12 0.19 0.01" width="0.48" height="0.10" depth="0.20" color="#53d5ff" rotation="0 0 18"></a-box>
 <a-box position="0.12 0.25 0.02" width="0.42" height="0.09" depth="0.18" color="#087fe0" rotation="0 0 -15"></a-box>
@@ -48,7 +48,7 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-text value="RIO" font="exo2bold" align="center" color="#07345b" width="3.0" scale="0.31 0.31 0.31" position="0 0.99 0.09" wrap-count="28"></a-text>
 <a-text value="(-3, 1)" font="exo2bold" align="center" color="#07345b" width="3.0" scale="0.41 0.41 0.41" position="0 0.79 0.09" wrap-count="28"></a-text>
 </a-entity>
-<a-entity position="0.44 0.05 0.44">
+<a-entity id="mission-recycling" position="0.44 0.05 0.44">
 <a-box position="0 0.27 0" width="0.34" height="0.48" depth="0.28" color="#16a34a"></a-box>
 <a-box position="0 0.53 0" width="0.39" height="0.07" depth="0.32" color="#65e69a"></a-box>
 <a-box position="0 0.59 0" width="0.13" height="0.035" depth="0.10" color="#087a42"></a-box>
@@ -59,7 +59,7 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-text value="RECICLAJE" font="exo2bold" align="center" color="#06452a" width="3.0" scale="0.29 0.29 0.29" position="0 1.13 0.09" wrap-count="28"></a-text>
 <a-text value="(2, -2)" font="exo2bold" align="center" color="#06452a" width="3.0" scale="0.41 0.41 0.41" position="0 0.92 0.09" wrap-count="28"></a-text>
 </a-entity>
-<a-entity position="-0.88 0.10 0.66">
+<a-entity id="mission-solar" position="-0.88 0.10 0.66">
 <a-sphere position="0.20 0.60 -0.02" radius="0.14" color="#ffca28"></a-sphere>
 <a-sphere position="0.16 0.62 0.10" radius="0.018" color="#71431d"></a-sphere>
 <a-sphere position="0.24 0.62 0.10" radius="0.018" color="#71431d"></a-sphere>
@@ -84,7 +84,18 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 const marker=document.querySelector('#mision-verde-marker');
 const scene=document.querySelector('a-scene');
 const status=document.querySelector('#status');
-status.textContent='Iniciando cámara…';
+// Cada carga elige una misión ambiental al azar para este celular.
+const missions=[
+  {id:'mission-tree',name:'ÁRBOL',tip:'Reto: ¿por qué son importantes los árboles?'},
+  {id:'mission-river',name:'RÍO',tip:'Reto: menciona una forma de proteger los ríos.'},
+  {id:'mission-recycling',name:'RECICLAJE',tip:'Reto: ¿qué material puedes separar para reciclar?'},
+  {id:'mission-solar',name:'PANEL SOLAR',tip:'Reto: ¿qué energía aprovecha el panel solar?'}
+];
+const chosen=missions[Math.floor(Math.random()*missions.length)];
+missions.forEach(m=>{const el=document.getElementById(m.id); if(el) el.setAttribute('visible',m.id===chosen.id);});
+const help=document.querySelector('#help');
+help.textContent='Tu misión: '+chosen.name+' · '+chosen.tip+' · Apunta al marcador KANJI.';
+status.textContent='Tu misión: '+chosen.name+' · enfocando KANJI';
 window.addEventListener('camera-init',()=>{status.textContent='Cámara activa · enfoca KANJI';});
 scene.addEventListener('camera-init',()=>{status.textContent='Cámara activa · enfoca KANJI';});
 window.addEventListener('camera-error',()=>{status.textContent='Cámara bloqueada: permite el acceso en Chrome';});
