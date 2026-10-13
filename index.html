@@ -170,6 +170,19 @@ function addNewMission(m){
   marker.querySelector('a-entity[scale]').appendChild(holder);
 }
 missions.slice(4).forEach(addNewMission);
+// Movimiento suave de flotación para las 16 misiones, sin desplazar sus coordenadas X/Z.
+function addFloatAnimation(el){
+  if(!el) return;
+  const p=(el.getAttribute('position')||{x:0,y:0,z:0});
+  const x=Number(p.x)||0, y=Number(p.y)||0, z=Number(p.z)||0;
+  el.setAttribute('animation__float',{
+    property:'position',
+    from:`${x} ${y} ${z}`,
+    to:`${x} ${(y+0.08).toFixed(2)} ${z}`,
+    dir:'alternate',dur:1500,easing:'easeInOutSine',loop:true
+  });
+}
+missions.forEach(m=>addFloatAnimation(document.getElementById(m.id)));
 const chosen=missions[Math.floor(Math.random()*missions.length)];
 missions.forEach(m=>{const el=document.getElementById(m.id); if(el) el.setAttribute('visible',m.id===chosen.id);});
 const help=document.querySelector('#help');
