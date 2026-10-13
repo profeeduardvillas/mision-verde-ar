@@ -26,6 +26,12 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-plane width="2.8" height="2.8" color="#eef8ef" opacity="0.94"></a-plane>
 <a-box position="0 0 0.01" width="2.55" height="0.025" depth="0.025" color="#163b22"></a-box>
 <a-box position="0 0 0.01" width="0.025" height="0.025" depth="2.55" color="#163b22"></a-box>
+<!-- Flechas y etiquetas visibles de los ejes cartesianos -->
+<a-cone position="1.28 0 0.01" rotation="0 0 -90" radius-bottom="0.075" radius-top="0" height="0.16" color="#163b22"></a-cone>
+<a-cone position="0 1.28 0.01" rotation="0 0 0" radius-bottom="0.075" radius-top="0" height="0.16" color="#163b22"></a-cone>
+<a-text value="X" align="center" color="#b91c1c" width="1.2" scale="0.48 0.48 0.48" position="1.12 0.18 0.05" font="exo2bold"></a-text>
+<a-text value="Y" align="center" color="#1d4ed8" width="1.2" scale="0.48 0.48 0.48" position="0.18 1.12 0.05" font="exo2bold"></a-text>
+<a-text value="0" align="center" color="#163b22" width="0.8" scale="0.28 0.28 0.28" position="0.10 -0.13 0.05"></a-text>
 </a-entity>
 <a-entity id="mission-tree" position="1.10 0.15 -0.44">
 <a-cylinder position="0 0.20 0" radius="0.075" height="0.40" color="#8b552e"></a-cylinder>
