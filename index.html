@@ -84,13 +84,86 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 const marker=document.querySelector('#mision-verde-marker');
 const scene=document.querySelector('a-scene');
 const status=document.querySelector('#status');
-// Cada carga elige una misión ambiental al azar para este celular.
+// 16 misiones ambientales: las primeras cuatro conservan sus modelos originales.
 const missions=[
-  {id:'mission-tree',name:'ÁRBOL',tip:'Reto: ¿por qué son importantes los árboles?'},
-  {id:'mission-river',name:'RÍO',tip:'Reto: menciona una forma de proteger los ríos.'},
-  {id:'mission-recycling',name:'RECICLAJE',tip:'Reto: ¿qué material puedes separar para reciclar?'},
-  {id:'mission-solar',name:'PANEL SOLAR',tip:'Reto: ¿qué energía aprovecha el panel solar?'}
+  {id:'mission-tree',name:'ÁRBOL',x:5,y:2,tip:'Reto: ¿por qué son importantes los árboles?'},
+  {id:'mission-river',name:'RÍO',x:-3,y:1,tip:'Reto: menciona una forma de proteger los ríos.'},
+  {id:'mission-recycling',name:'RECICLAJE',x:2,y:-2,tip:'Reto: ¿qué material puedes separar para reciclar?'},
+  {id:'mission-solar',name:'PANEL SOLAR',x:-4,y:-3,tip:'Reto: ¿qué energía aprovecha el panel solar?'},
+  {id:'mission-bees',name:'ABEJAS',x:4,y:4,tip:'Reto: ¿cómo ayudan las abejas a las plantas?',emoji:'🐝',color:'#fbbf24',kind:'bee'},
+  {id:'mission-garden',name:'HUERTA ESCOLAR',x:-1,y:4,tip:'Reto: menciona algo que puedas cultivar.',emoji:'🌱',color:'#22c55e',kind:'plant'},
+  {id:'mission-wind',name:'VIENTO LIMPIO',x:0,y:3,tip:'Reto: ¿cómo puede el viento producir energía?',emoji:'🌬️',color:'#38bdf8',kind:'wind'},
+  {id:'mission-wildlife',name:'FAUNA SILVESTRE',x:-5,y:0,tip:'Reto: ¿cómo protegemos los hábitats?',emoji:'🐢',color:'#16a34a',kind:'animal'},
+  {id:'mission-flowers',name:'FLORES NATIVAS',x:3,y:5,tip:'Reto: ¿por qué sembrar especies nativas?',emoji:'🌼',color:'#f472b6',kind:'flower'},
+  {id:'mission-bike',name:'MOVILIDAD SOSTENIBLE',x:-2,y:-1,tip:'Reto: ¿qué transporte contamina menos?',emoji:'🚲',color:'#0ea5e9',kind:'bike'},
+  {id:'mission-rain',name:'AGUA LLUVIA',x:1,y:0,tip:'Reto: ¿cómo puedes ahorrar agua?',emoji:'🌧️',color:'#38bdf8',kind:'water'},
+  {id:'mission-earth',name:'PLANETA TIERRA',x:-2,y:-4,tip:'Reto: propone una acción ecológica para el curso.',emoji:'🌎',color:'#2563eb',kind:'earth'},
+  {id:'mission-forest',name:'BOSQUE',x:4,y:-2,tip:'Reto: ¿cómo ayuda el bosque al suelo?',emoji:'🌿',color:'#15803d',kind:'forest'},
+  {id:'mission-energy',name:'AHORRO DE ENERGÍA',x:-4,y:2,tip:'Reto: ¿qué aparato puedes apagar al salir?',emoji:'🔋',color:'#a3e635',kind:'battery'},
+  {id:'mission-butterfly',name:'MARIPOSAS',x:2,y:4,tip:'Reto: ¿qué necesitan las mariposas para vivir?',emoji:'🦋',color:'#c084fc',kind:'butterfly'},
+  {id:'mission-compost',name:'COMPOSTAJE',x:-3,y:-4,tip:'Reto: ¿qué residuos sirven para hacer abono?',emoji:'🪴',color:'#a16207',kind:'pot'}
 ];
+// Construye figuras 3D coloridas para las doce misiones nuevas y las ubica según (x,y).
+function addPrimitive(parent,tag,attrs){const el=document.createElement(tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));parent.appendChild(el);return el;}
+function addNewMission(m){
+  const holder=document.createElement('a-entity');holder.setAttribute('id',m.id);holder.setAttribute('position',`${(m.x*.22).toFixed(2)} 0.05 ${(-m.y*.22).toFixed(2)}`);
+  const color=m.color;
+  if(m.kind==='bee'){
+    addPrimitive(holder,'a-sphere',{position:'0 0.36 0',radius:'.18',color:'#facc15',scale:'1.25 .85 .8'});
+    addPrimitive(holder,'a-box',{position:'0 0.36 .13',width:'.07',height:'.28',depth:'.025',color:'#202020'});
+    addPrimitive(holder,'a-sphere',{position:'-.12 .53 -.02',radius:'.10',color:'#e0f2fe',opacity:'.9'});
+    addPrimitive(holder,'a-sphere',{position:'.12 .53 -.02',radius:'.10',color:'#e0f2fe',opacity:'.9'});
+  }else if(m.kind==='plant'||m.kind==='forest'){
+    addPrimitive(holder,'a-cylinder',{position:'0 .17 0',radius:'.10',height:'.34',color:'#8b5e34'});
+    addPrimitive(holder,'a-sphere',{position:'0 .47 0',radius:'.22',color});
+    addPrimitive(holder,'a-sphere',{position:'-.13 .40 .02',radius:'.14',color:'#4ade80'});
+    addPrimitive(holder,'a-sphere',{position:'.13 .40 .02',radius:'.14',color:'#15803d'});
+  }else if(m.kind==='wind'){
+    addPrimitive(holder,'a-cylinder',{position:'0 .30 0',radius:'.025',height:'.60',color:'#e2e8f0'});
+    for(let a=0;a<3;a++){const blade=addPrimitive(holder,'a-box',{position:'0 .59 0',width:'.07',height:'.27',depth:'.035',color});blade.setAttribute('rotation',`0 0 ${a*120}`);}
+    addPrimitive(holder,'a-sphere',{position:'0 .59 .03',radius:'.055',color:'#fff'});
+  }else if(m.kind==='animal'){
+    addPrimitive(holder,'a-sphere',{position:'0 .26 0',radius:'.20',color});
+    addPrimitive(holder,'a-sphere',{position:'0 .40 .15',radius:'.13',color:'#65a30d'});
+    for(let a=-1;a<=1;a+=2)addPrimitive(holder,'a-sphere',{position:`${a*.14} .13 .03`,radius:'.065',color:'#166534'});
+  }else if(m.kind==='flower'||m.kind==='butterfly'){
+    if(m.kind==='flower'){
+      addPrimitive(holder,'a-cylinder',{position:'0 .23 0',radius:'.025',height:'.42',color:'#16a34a'});
+      addPrimitive(holder,'a-sphere',{position:'0 .48 0',radius:'.09',color:'#facc15'});
+      for(let a=0;a<6;a++){const ang=a*Math.PI/3;addPrimitive(holder,'a-sphere',{position:`${(Math.cos(ang)*.12).toFixed(2)} .48 ${(Math.sin(ang)*.12).toFixed(2)}`,radius:'.08',color});}
+    }else{
+      addPrimitive(holder,'a-sphere',{position:'-.12 .42 .02',radius:'.15',color,scale:'1 .8 .45'});
+      addPrimitive(holder,'a-sphere',{position:'.12 .42 .02',radius:'.15',color,scale:'1 .8 .45'});
+      addPrimitive(holder,'a-cylinder',{position:'0 .40 .04',radius:'.025',height:'.28',color:'#334155'});
+    }
+  }else if(m.kind==='bike'){
+    for(const x of [-.16,.16])addPrimitive(holder,'a-torus',{position:`${x} .18 0`,radius:'.11',radiusTubular:'.018',color:'#0f172a'});
+    addPrimitive(holder,'a-box',{position:'0 .27 0',width:'.27',height:'.025',depth:'.025',color});
+    addPrimitive(holder,'a-box',{position:'-.07 .34 0',width:'.025',height:'.14',depth:'.025',color});
+    addPrimitive(holder,'a-box',{position:'.09 .34 0',width:'.025',height:'.14',depth:'.025',color});
+  }else if(m.kind==='water'){
+    addPrimitive(holder,'a-sphere',{position:'0 .30 0',radius:'.20',color,scale:'.8 1.15 .8'});
+    addPrimitive(holder,'a-sphere',{position:'-.12 .48 .02',radius:'.09',color:'#bae6fd'});
+  }else if(m.kind==='earth'){
+    addPrimitive(holder,'a-sphere',{position:'0 .36 0',radius:'.24',color:'#2563eb'});
+    addPrimitive(holder,'a-sphere',{position:'-.08 .44 .19',radius:'.10',color:'#22c55e',scale:'1 .7 .5'});
+    addPrimitive(holder,'a-sphere',{position:'.10 .28 .18',radius:'.08',color:'#16a34a',scale:'1 .7 .5'});
+  }else if(m.kind==='battery'){
+    addPrimitive(holder,'a-box',{position:'0 .31 0',width:'.28',height:'.43',depth:'.20',color});
+    addPrimitive(holder,'a-box',{position:'0 .55 0',width:'.10',height:'.05',depth:'.08',color:'#475569'});
+    addPrimitive(holder,'a-text',{value:'+',align:'center',color:'#365314',width:'1',scale:'.45 .45 .45',position:'0 .28 .12'});
+  }else if(m.kind==='pot'){
+    addPrimitive(holder,'a-cylinder',{position:'0 .20 0',radius:'.16',height:'.26',color:'#c2410c',scale:'1 .8 1'});
+    addPrimitive(holder,'a-cylinder',{position:'0 .34 0',radius:'.17',height:'.05',color:'#713f12'});
+    addPrimitive(holder,'a-sphere',{position:'-.06 .49 0',radius:'.10',color:'#22c55e'});
+    addPrimitive(holder,'a-sphere',{position:'.08 .52 0',radius:'.11',color:'#4ade80'});
+  }
+  const board=addPrimitive(holder,'a-box',{position:'0 .91 .03',width:'1.18',height:'.43',depth:'.035',color,opacity:'1'});
+  addPrimitive(holder,'a-text',{value:m.name,align:'center',color:'#073b2a',width:'3.2',scale:'.25 .25 .25',position:'0 1.01 .06',wrapCount:'28'});
+  addPrimitive(holder,'a-text',{value:`(${m.x}, ${m.y})`,align:'center',color:'#073b2a',width:'3.0',scale:'.36 .36 .36',position:'0 .80 .06'});
+  marker.querySelector('a-entity[scale]').appendChild(holder);
+}
+missions.slice(4).forEach(addNewMission);
 const chosen=missions[Math.floor(Math.random()*missions.length)];
 missions.forEach(m=>{const el=document.getElementById(m.id); if(el) el.setAttribute('visible',m.id===chosen.id);});
 const help=document.querySelector('#help');
