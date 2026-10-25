@@ -41,7 +41,7 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-sphere position="-0.07 0.52 0.20" radius="0.025" color="#17351e"></a-sphere>
 <a-sphere position="0.07 0.52 0.20" radius="0.025" color="#17351e"></a-sphere>
 <a-box position="0 1.13 0.04" width="1.65" height="0.66" depth="0.045" color="#fff176" opacity="1"></a-box>
-<a-text value="ARBOL" font="exo2bold" align="center" color="#073b2a" width="3.0" scale="1.15 1.15 1.15" position="0 1.32 0.10" wrap-count="28"></a-text>
+<a-text value="ÁRBOL" font="exo2bold" align="center" color="#073b2a" width="3.0" scale="1.15 1.15 1.15" position="0 1.32 0.10" wrap-count="28"></a-text>
 <a-text value="(5, 2)" font="exo2bold" align="center" color="#073b2a" width="3.0" scale="1.30 1.30 1.30" position="0 0.98 0.10" wrap-count="28"></a-text>
 </a-entity>
 <a-entity id="mission-river" position="-0.66 0.06 -0.22">
@@ -54,21 +54,8 @@ a-canvas{position:fixed!important;inset:0!important;width:100%!important;height:
 <a-text value="RIO" font="exo2bold" align="center" color="#07345b" width="3.0" scale="1.15 1.15 1.15" position="0 1.08 0.11" wrap-count="28"></a-text>
 <a-text value="(-3, 1)" font="exo2bold" align="center" color="#07345b" width="3.0" scale="1.25 1.25 1.25" position="0 0.73 0.11" wrap-count="28"></a-text>
 </a-entity>
-<a-entity id="mission-recycling" position="0.44 0.05 0.44">
-<a-box position="0 0.27 0" width="0.34" height="0.48" depth="0.28" color="#16a34a"></a-box>
-<a-box position="0 0.53 0" width="0.39" height="0.07" depth="0.32" color="#65e69a"></a-box>
-<a-box position="0 0.59 0" width="0.13" height="0.035" depth="0.10" color="#087a42"></a-box>
-<a-text value="♻" align="center" color="#ffffff" width="1.0" scale="0.45 0.45 0.45" position="0 0.25 0.15"></a-text>
-<a-sphere position="-0.07 0.36 0.15" radius="0.022" color="#073b28"></a-sphere>
-<a-sphere position="0.07 0.36 0.15" radius="0.022" color="#073b28"></a-sphere>
-<a-box position="0 1.02 0.05" width="1.75" height="0.68" depth="0.045" color="#dcfce7" opacity="1"></a-box>
-<a-text value="RECICLAJE" font="exo2bold" align="center" color="#06452a" width="3.0" scale="1.08 1.08 1.08" position="0 1.22 0.11" wrap-count="28"></a-text>
-<a-text value="(2, -2)" font="exo2bold" align="center" color="#06452a" width="3.0" scale="1.25 1.25 1.25" position="0 0.87 0.11" wrap-count="28"></a-text>
-</a-entity>
+
 <a-entity id="mission-solar" position="-0.88 0.10 0.66">
-<a-sphere position="0.20 0.60 -0.02" radius="0.14" color="#ffca28"></a-sphere>
-<a-sphere position="0.16 0.62 0.10" radius="0.018" color="#71431d"></a-sphere>
-<a-sphere position="0.24 0.62 0.10" radius="0.018" color="#71431d"></a-sphere>
 <a-box position="0 0.29 0" width="0.52" height="0.06" depth="0.38" color="#1351c5" rotation="0 0 -12"></a-box>
 <a-box position="0 0.325 0.01" width="0.48" height="0.012" depth="0.34" color="#39b7ff" rotation="0 0 -12"></a-box>
 <a-box position="0 0.22 0" width="0.045" height="0.28" depth="0.045" color="#687a91"></a-box>
@@ -92,29 +79,41 @@ const scene=document.querySelector('a-scene');
 const status=document.querySelector('#status');
 // 16 misiones ambientales: las primeras cuatro conservan sus modelos originales.
 const missions=[
-  {id:'mission-tree',name:'ÁRBOL',x:5,y:2,tip:'Reto: ¿por qué son importantes los árboles?'},
-  {id:'mission-river',name:'RÍO',x:-3,y:1,tip:'Reto: menciona una forma de proteger los ríos.'},
-  {id:'mission-recycling',name:'RECICLAJE',x:2,y:-2,tip:'Reto: ¿qué material puedes separar para reciclar?'},
-  {id:'mission-solar',name:'PANEL SOLAR',x:-4,y:-3,tip:'Reto: ¿qué energía aprovecha el panel solar?'},
-  {id:'mission-bees',name:'ABEJAS',x:4,y:4,tip:'Reto: ¿cómo ayudan las abejas a las plantas?',emoji:'🐝',color:'#fbbf24',kind:'bee'},
-  {id:'mission-garden',name:'HUERTA ESCOLAR',x:-1,y:4,tip:'Reto: menciona algo que puedas cultivar.',emoji:'🌱',color:'#22c55e',kind:'plant'},
-  {id:'mission-wind',name:'VIENTO LIMPIO',x:0,y:3,tip:'Reto: ¿cómo puede el viento producir energía?',emoji:'🌬️',color:'#38bdf8',kind:'wind'},
-  {id:'mission-wildlife',name:'FAUNA SILVESTRE',x:-5,y:0,tip:'Reto: ¿cómo protegemos los hábitats?',emoji:'🐢',color:'#16a34a',kind:'animal'},
-  {id:'mission-flowers',name:'FLORES NATIVAS',x:3,y:5,tip:'Reto: ¿por qué sembrar especies nativas?',emoji:'🌼',color:'#f472b6',kind:'flower'},
-  {id:'mission-bike',name:'MOVILIDAD SOSTENIBLE',x:-2,y:-1,tip:'Reto: ¿qué transporte contamina menos?',emoji:'🚲',color:'#0ea5e9',kind:'bike'},
-  {id:'mission-rain',name:'AGUA LLUVIA',x:1,y:0,tip:'Reto: ¿cómo puedes ahorrar agua?',emoji:'🌧️',color:'#38bdf8',kind:'water'},
-  {id:'mission-earth',name:'PLANETA TIERRA',x:-2,y:-4,tip:'Reto: propone una acción ecológica para el curso.',emoji:'🌎',color:'#2563eb',kind:'earth'},
-  {id:'mission-forest',name:'BOSQUE',x:4,y:-2,tip:'Reto: ¿cómo ayuda el bosque al suelo?',emoji:'🌿',color:'#15803d',kind:'forest'},
-  {id:'mission-energy',name:'AHORRO DE ENERGÍA',x:-4,y:2,tip:'Reto: ¿qué aparato puedes apagar al salir?',emoji:'🔋',color:'#a3e635',kind:'battery'},
-  {id:'mission-butterfly',name:'MARIPOSAS',x:2,y:4,tip:'Reto: ¿qué necesitan las mariposas para vivir?',emoji:'🦋',color:'#c084fc',kind:'butterfly'},
-  {id:'mission-compost',name:'COMPOSTAJE',x:-3,y:-4,tip:'Reto: ¿qué residuos sirven para hacer abono?',emoji:'🪴',color:'#a16207',kind:'pot'}
+  {id:'mission-tree',name:'ÁRBOL',x:5,y:2,tip:'Observa el árbol y piensa cómo ayuda al planeta.'},
+  {id:'mission-river',name:'RÍO',x:-3,y:1,tip:'El río representa el agua que debemos proteger.'},
+  {id:'mission-solar',name:'PANEL SOLAR',x:-4,y:-3,tip:'El panel solar aprovecha la energía del Sol.'},
+  {id:'mission-sun',name:'SOL',x:4,y:3,tip:'El Sol aporta luz y energía.',emoji:'☀️',color:'#fbbf24',kind:'sun'},
+  {id:'mission-leaf',name:'HOJA DE ÁRBOL',x:-1,y:4,tip:'Las hojas ayudan a las plantas a captar luz.',emoji:'🍃',color:'#22c55e',kind:'leaf'},
+  {id:'mission-bees',name:'ABEJA',x:4,y:4,tip:'Las abejas ayudan a polinizar las flores.',emoji:'🐝',color:'#fbbf24',kind:'bee'},
+  {id:'mission-grass',name:'CÉSPED',x:-2,y:3,tip:'El césped y las plantas cubren y protegen el suelo.',emoji:'🌱',color:'#22c55e',kind:'grass'},
+  {id:'mission-flowers',name:'FLOR',x:3,y:5,tip:'Las flores alimentan a polinizadores como las abejas.',emoji:'🌼',color:'#f472b6',kind:'flower'},
+  {id:'mission-moon',name:'LUNA',x:-3,y:-3,tip:'La Luna ilumina la noche reflejando la luz solar.',emoji:'🌙',color:'#e2e8f0',kind:'moon'},
+  {id:'mission-clouds',name:'NUBES',x:1,y:2,tip:'Las nubes forman parte del ciclo del agua.',emoji:'☁️',color:'#bae6fd',kind:'clouds'}
 ];
 // Construye figuras 3D coloridas para las doce misiones nuevas y las ubica según (x,y).
 function addPrimitive(parent,tag,attrs){const el=document.createElement(tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));parent.appendChild(el);return el;}
 function addNewMission(m){
   const holder=document.createElement('a-entity');holder.setAttribute('id',m.id);holder.setAttribute('position',`${(m.x*.22).toFixed(2)} 0.05 ${(-m.y*.22).toFixed(2)}`);
   const color=m.color;
-  if(m.kind==='bee'){
+  if(m.kind==='sun'){
+    addPrimitive(holder,'a-sphere',{position:'0 .42 0',radius:'.27',color:'#facc15'});
+    for(let a=0;a<8;a++){const ang=a*Math.PI/4;addPrimitive(holder,'a-cylinder',{position:`${(Math.cos(ang)*.34).toFixed(2)} .42 ${(Math.sin(ang)*.34).toFixed(2)}`,radius:'.025',height:'.12',color:'#f59e0b',rotation:`0 ${a*45} 90`});}
+  }else if(m.kind==='leaf'){
+    addPrimitive(holder,'a-sphere',{position:'0 .39 0',radius:'.23',color:'#22c55e',scale:'.65 1.35 .28',rotation:'0 0 -35'});
+    addPrimitive(holder,'a-cylinder',{position:'0 .39 .04',radius:'.012',height:'.38',color:'#166534',rotation:'0 0 -35'});
+  }else if(m.kind==='grass'){
+    for(let a=0;a<7;a++){const x=(a-3)*.065;const blade=addPrimitive(holder,'a-box',{position:`${x} .23 0`,width:'.045',height:`${.25+(a%3)*.07}`,depth:'.035',color:a%2?'#16a34a':'#4ade80',rotation:`0 0 ${(a-3)*-9}`});}
+    addPrimitive(holder,'a-box',{position:'0 .07 0',width:'.52',height:'.08',depth:'.18',color:'#65a30d'});
+  }else if(m.kind==='moon'){
+    addPrimitive(holder,'a-sphere',{position:'0 .43 0',radius:'.27',color:'#fef3c7'});
+    addPrimitive(holder,'a-sphere',{position:'.12 .51 .13',radius:'.23',color:'#172554'});
+    for(const p of [['-.27','.70','.02'],['.25','.72','-.02'],['-.25','.22','.02']])addPrimitive(holder,'a-sphere',{position:p.join(' '),radius:'.025',color:'#fff7ed'});
+  }else if(m.kind==='clouds'){
+    addPrimitive(holder,'a-sphere',{position:'-.16 .38 0',radius:'.16',color:'#e0f2fe'});
+    addPrimitive(holder,'a-sphere',{position:'0 .46 0',radius:'.21',color:'#f8fafc'});
+    addPrimitive(holder,'a-sphere',{position:'.19 .37 0',radius:'.16',color:'#bae6fd'});
+    addPrimitive(holder,'a-box',{position:'0 .30 0',width:'.48',height:'.13',depth:'.15',color:'#e0f2fe'});
+  }else if(m.kind==='bee'){
     addPrimitive(holder,'a-sphere',{position:'0 0.36 0',radius:'.18',color:'#facc15',scale:'1.25 .85 .8'});
     addPrimitive(holder,'a-box',{position:'0 0.36 .13',width:'.07',height:'.28',depth:'.025',color:'#202020'});
     addPrimitive(holder,'a-sphere',{position:'-.12 .53 -.02',radius:'.10',color:'#e0f2fe',opacity:'.9'});
@@ -169,7 +168,7 @@ function addNewMission(m){
   addPrimitive(holder,'a-text',{value:`(${m.x}, ${m.y})`,align:'center',color:'#073b2a',width:'3.4',scale:'1.02 1.02 1.02',position:'0 .78 .09'});
   marker.querySelector('a-entity[scale]').appendChild(holder);
 }
-missions.slice(4).forEach(addNewMission);
+missions.slice(3).forEach(addNewMission);
 // Movimiento suave de flotación para las 16 misiones, sin desplazar sus coordenadas X/Z.
 function addFloatAnimation(el){
   if(!el) return;
@@ -184,7 +183,7 @@ function addFloatAnimation(el){
 }
 missions.forEach(m=>addFloatAnimation(document.getElementById(m.id)));
 const chosen=missions[Math.floor(Math.random()*missions.length)];
-missions.forEach(m=>{const el=document.getElementById(m.id); if(el) el.setAttribute('visible',m.id===chosen.id);});
+document.querySelectorAll('#mision-verde-marker > a-entity[scale] > a-entity[id]').forEach(el=>el.setAttribute('visible',el.id===chosen.id));
 const help=document.querySelector('#help');
 help.textContent='Tu misión: '+chosen.name+' · '+chosen.tip+' · Apunta al marcador KANJI.';
 status.textContent='Tu misión: '+chosen.name+' · enfocando KANJI';
